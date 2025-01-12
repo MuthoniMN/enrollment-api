@@ -1,0 +1,2 @@
+ALTER TABLE "enrollments" ADD COLUMN "cohort" integer NOT NULL;--> statement-breakpoint
+ALTER TABLE "enrollments" ADD CONSTRAINT "enrollments_cohort_cohorts_id_fk" FOREIGN KEY ("cohort") REFERENCES "public"."cohorts"("id") ON DELETE cascade ON UPDATE no action;

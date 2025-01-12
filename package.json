@@ -9,7 +9,9 @@
     "start": "ts-node src/index.ts",
     "dev": "nodemon src/index.ts",
     "lint": "eslint ./src/**/*.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "migrate": "npx drizzle-kit migrate",
+    "migrations:generate": "npx drizzle-kit generate"
   },
   "keywords": [
     "registration",
