@@ -1,8 +1,8 @@
-import { integer, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
+import { integer, pgTable, serial, text, timestamp, unique } from 'drizzle-orm/pg-core';
 
 export const adminTable = pgTable('admins', {
   id: serial('id').primaryKey(),
-  username: text('username').notNull(),
+  username: text('username').notNull().unique(),
   password: text('password').notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at')
@@ -24,8 +24,8 @@ export const usersTable = pgTable('users', {
   id: serial('id').primaryKey(),
   name: text('name').notNull(),
   location: text('location').notNull(),
-  email: text('email').notNull(),
-  phoneNumber: text('phoneNumber').notNull(),
+  email: text('email').notNull().unique(),
+  phoneNumber: text('phoneNumber').notNull().unique(),
   trackId: integer('trackId').notNull().references(() => trackTable.id, { onDelete: 'cascade' }),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at')
@@ -51,7 +51,9 @@ export const enrollmentTable = pgTable('enrollments', {
   updatedAt: timestamp('updated_at')
     .notNull()
     .$onUpdate(() => new Date()),
-})
+}, (e) => [{
+  unq: unique().on(e.user, e.cohort)
+}])
 
 export type InsertAdmin = typeof adminTable.$inferInsert;
 export type SelectAdmin = typeof adminTable.$inferSelect;
