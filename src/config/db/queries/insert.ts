@@ -13,21 +13,31 @@ import {
 } from "../schema";
 
 export async function createAdmin(data: InsertAdmin){
-  await db.insert(adminTable).values(data);
+  const admin = await db.insert(adminTable).values(data).returning();
+
+  return admin;
 }
 
 export async function createTrack(data: InsertTrack){
-  await db.insert(trackTable).values(data);
+  const track = await db.insert(trackTable).values(data).returning();
+
+  return track;
 }
 
 export async function createUser(data: InsertUser){
-  await db.insert(usersTable).values(data);
+  const user = await db.insert(usersTable).values(data).returning();
+
+  return user;
 }
 
 export async function createCohort(data: InsertCohort){
-  await db.insert(cohortTable).values(data);
+  const cohort = await db.insert(cohortTable).values(data).returning();
+
+  return cohort;
 }
 
 export async function createEnrollment(data: InsertEnrollment){
-  await db.insert(enrollmentTable).values(data);
+  const enrollment = await db.insert(enrollmentTable).values(data).returning();
+
+  return enrollment;
 }

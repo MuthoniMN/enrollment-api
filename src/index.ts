@@ -1,13 +1,15 @@
 import express from "express";
 import { config } from "dotenv";
-import swaggerUI from "swagger-ui-express";
-import swaggerSpec from "./config/swagger";
+import router from "./routes/";
 
 const app = express();
 
 config({ path: '.env.local' })
 
-app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+app.use(express.static('public'))
+app.use(express.json())
+app.use(express.urlencoded())
+app.use('/api/v1/', router);
 
 const port = process.env.PORT || 5000;
 

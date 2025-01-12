@@ -21,17 +21,21 @@
   "license": "ISC",
   "dependencies": {
     "@vercel/postgres": "^0.10.0",
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.3",
     "express": "^4.21.2",
+    "nodemailer": "^6.9.16",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
+    "@types/nodemailer": "^6.4.17",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.7",
     "@typescript-eslint/eslint-plugin": "^8.19.1",

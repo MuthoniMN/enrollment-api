@@ -33,6 +33,16 @@ export async function getAdmin(id: SelectAdmin['id']): Promise<Partial<SelectAdm
   return admin;
 }
 
+export async function getAdminByUsername(username: SelectAdmin['username']): Promise<Partial<SelectAdmin>[]>{
+  const admin = await db.select({
+    id: adminTable.id,
+    username: adminTable.username,
+    password: adminTable.password
+  }).from(adminTable).where(eq(adminTable.username, username));
+
+  return admin;
+}
+
 export async function getAllTrack(): Promise<Partial<SelectTrack>[]>{
   const tracks = await db.select({
     id: trackTable.id,
