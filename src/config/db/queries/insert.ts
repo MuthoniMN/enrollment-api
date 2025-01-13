@@ -30,6 +30,12 @@ export async function createUser(data: InsertUser){
   return user;
 }
 
+export async function createUser(data: InsertUser){
+  const user = await db.insert(usersTable).values(data).returning();
+
+  return user;
+}
+
 export async function createCohort(data: InsertCohort){
   const cohort = await db.insert(cohortTable).values(data).returning();
 

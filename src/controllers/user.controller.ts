@@ -1,8 +1,12 @@
-import { SelectUser, InsertUser } from "../config/db/schema";
-import { createUser } from "../config/db/queries/insert";
+import { SelectUser, InsertUser, SelectCohort } from "../config/db/schema";
+import { createUser, createUserAndEnrollment } from "../config/db/queries/insert";
 import { getAllUser, getUser } from "../config/db/queries/select";
 import { updateUser } from "../config/db/queries/update";
 import { deleteUser } from "../config/db/queries/delete";
+
+export interface RegisterUser extends InsertUser {
+  cohort: SelectCohort['id']
+}
 
 class UserController {
 
@@ -14,6 +18,17 @@ class UserController {
     const user = await createUser(data);
 
     return user;
+  }
+
+  async register(data: RegisterUser){
+    if(!data){
+      throw new Error("Invalid data")
+    }
+    const { cohort, ...userData  } = data;
+    
+    const details = await createUserAndEnrollment(userData, cohort);
+
+    return details;
   }
 
   async getAll(): Promise<Partial<SelectUser>[]>{

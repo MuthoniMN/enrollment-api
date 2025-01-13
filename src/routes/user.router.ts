@@ -15,10 +15,31 @@ const userController = new UserController();
  *    User:
  *      type: object
  *      properties:
- *        title:
+ *        name:
  *          type: string
- *        description:
+ *        email:
  *          type: string
+ *        location:
+ *          type: string
+ *        phoneNumber:
+ *          type: string
+ *        trackId:
+ *          type: integer
+ *      UserReg:
+ *        type: object
+ *        properties:
+ *          name:
+ *            type: string
+ *          email:
+ *            type: string
+ *          location:
+ *            type: string
+ *          phoneNumber:
+ *            type: string
+ *          trackId:
+ *            type: integer
+ *          cohort:
+ *            type: integer
  *  responses:
  *    UserResponses:
  *      type: object
@@ -85,7 +106,7 @@ userRouter.post('/', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 201,
-      message: "Successfully created the task!",
+      message: "Successfully created the user!",
       data: { user }
     }).status(201)
     return;
@@ -105,6 +126,79 @@ userRouter.post('/', auth, async (req: Request, res: Response) => {
     }
   }
 })
+
+/**
+ * @swagger
+ * /api/v1/users/register:
+ *    post:
+ *      summary: Register a new user
+ *      description: This endpoint creates a new user and registers them for a cohort
+ *      tags:
+ *        - User APIs
+ *      security:
+ *        - bearerAuth: []
+ *      requestBody:
+ *        description: The new user details
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: "#/components/schemas/UserReg"
+ *              example:
+ *                title: Backend
+ *                description: Back-end development using Node, Python, C#, Golang, .NET
+ *      responses:
+ *        201:
+ *          summary: Successfully creating a new user
+ *          description: A new user is successfully created
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: "#/components/responses/UserResponses"
+ *        400:
+ *          summary: Bad Request
+ *          description: Invalid data
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: "#/components/responses/BadRequestError"
+ *        500:
+ *          summary: Server Error 
+ *          description: Server error
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: "#/components/responses/ServerError"
+ */
+userRouter.post('/register', auth, async (req: Request, res: Response) => {
+  const data = req.body;
+
+  try {
+    const user = await userController.register(data);
+
+    res.json({
+      status: 201,
+      message: "Successfully registered the user!",
+      data: { user }
+    }).status(201)
+    return;
+  } catch (e) {
+    if((e as Error).message === "Invalid data"){
+      res.json({
+        status: 400,
+        message: "Invalid data",
+        data: {}
+      }).status(400);
+    }else {
+      res.json({
+        status: 500,
+        message: "Internal server error",
+        data: {}
+      }).status(500);
+    }
+  }
+})
+
 
 /**
 * @swagger
@@ -138,7 +232,7 @@ userRouter.get('/', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 201,
-      message: "Successfully created the task!",
+      message: "Successfully retrieved the user!",
       data: { user }
     }).status(201)
     return;
@@ -197,7 +291,7 @@ userRouter.get('/:id', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 201,
-      message: "Successfully created the task!",
+      message: "Successfully retrieved the user!",
       data: { user }
     }).status(201)
     return;
@@ -205,7 +299,7 @@ userRouter.get('/:id', auth, async (req: Request, res: Response) => {
     if((e as Error).message === "Not found"){
       res.json({
         status: 404,
-        message: "Task was not found!",
+        message: "User was not found!",
         data: {}
       }).status(404);
     }else{
@@ -267,7 +361,7 @@ userRouter.put('/:id', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 201,
-      message: "Successfully created the task!",
+      message: "Successfully updated the user!",
       data: { user }
     }).status(201)
     return;
@@ -281,7 +375,7 @@ userRouter.put('/:id', auth, async (req: Request, res: Response) => {
     }else if((e as Error).message === "Not found"){
       res.json({
         status: 404,
-        message: "Task was not found!",
+        message: "User was not found!",
         data: {}
       }).status(404);
     }else {
@@ -341,7 +435,7 @@ userRouter.delete('/:id', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 204,
-      message: "Successfully created the task!",
+      message: "Successfully deleted the user!",
       data: { user }
     }).status(204)
     return;
@@ -349,7 +443,7 @@ userRouter.delete('/:id', auth, async (req: Request, res: Response) => {
     if((e as Error).message === "Not found"){
       res.json({
         status: 404,
-        message: "Task was not found!",
+        message: "User was not found!",
         data: {}
       }).status(404);
     }else{
