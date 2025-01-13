@@ -1,5 +1,7 @@
 import { Router, Request, Response } from 'express';
 import AuthController from "../controllers/auth.controller";
+import { SelectAdmin } from "../config/db/schema";
+import { generateToken } from "../utils/jwt";
 
 const authRouter = Router();
 const authController = new AuthController();
@@ -187,12 +189,14 @@ authRouter.post('/login', async (req: Request, res: Response) => {
     return;
   }
   try {
-    const user = await authController.login({ username, password })
+    const user = await authController.login({ username, password }) as Partial<SelectAdmin>;
+
+    const token = generateToken({ id: user.id as number, username });
 
     res.json({
       status: 200,
       message: "Logged in successfully!",
-      data: { user }
+      data: { user, token }
     })
   } catch (e) {
     console.error(e);
