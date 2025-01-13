@@ -2,12 +2,13 @@ import express from "express";
 import { config } from "dotenv";
 import router from "./routes/";
 import cors from "cors";
+import path from 'path';
 
 const app = express();
 
 config({ path: '.env.local' })
 
-app.use(express.static('public'))
+app.use(express.static(path.join(__dirname,'public')))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
