@@ -12,6 +12,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 app.use('/api/v1/', router);
+router.use('/', (req, res) => {
+  res.send('Hey, the enrollment API is running')
+});
 
 const port = process.env.PORT || 5000;
 

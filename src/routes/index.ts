@@ -9,14 +9,14 @@ import userRouter from "./user.router";
 
 const router = express.Router();
 
-router.use('/', (req, res) => {
-  res.send('Hey, the enrollment API is running')
-});
 router.use('/docs/', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 router.use('/auth/', authRouter);
 router.use('/tracks/', trackRouter);
 router.use('/cohorts/', cohortRouter);
 router.use('/users', userRouter);
 router.use('/enrollments/', enrollmentRouter);
+router.use('/', (req, res) => {
+  res.send('Hey, the enrollment API is running')
+});
 
 export default router;
