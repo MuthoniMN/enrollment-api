@@ -9,7 +9,13 @@ import userRouter from "./user.router";
 
 const router = express.Router();
 
-router.use('/docs/', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+router.use('/docs/', swaggerUI.serve, swaggerUI.setup(swaggerSpec, {
+  customCssUrl: '/public/css/swagger-ui.css',
+  customJs: [
+  '/public/js/swagger-ui-bundle.js',
+  '/public/js/swagger-ui-standalone-preset.js',
+  ],
+}));
 router.use('/auth/', authRouter);
 router.use('/tracks/', trackRouter);
 router.use('/cohorts/', cohortRouter);
