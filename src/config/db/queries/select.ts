@@ -18,7 +18,7 @@ export async function getAllAdmin(): Promise<Partial<SelectAdmin>[]>{
     id: adminTable.id,
     username: adminTable.username,
     password: adminTable.password
-  }).from(adminTable).orderBy(asc(usersTable.createdAt));
+  }).from(adminTable).orderBy(asc(adminTable.createdAt));
 
   return admins;
 }
@@ -48,7 +48,7 @@ export async function getAllTrack(): Promise<Partial<SelectTrack>[]>{
     id: trackTable.id,
     title: trackTable.title,
     description: trackTable.description
-  }).from(trackTable).orderBy(asc(usersTable.createdAt));
+  }).from(trackTable).orderBy(asc(trackTable.createdAt));
 
   return tracks;
 }
@@ -70,7 +70,7 @@ export async function getAllUser(): Promise<Partial<SelectUser>[]>{
     email: usersTable.email,
     phoneNumber: usersTable.phoneNumber,
     location: usersTable.location,
-    track: trackTable.title
+    trackId: usersTable.trackId
   }).from(usersTable).leftJoin(trackTable, eq(usersTable.trackId, trackTable.id)).orderBy(asc(usersTable.createdAt));
 
   return users;
@@ -83,7 +83,7 @@ export async function getUser(id: SelectUser['id']): Promise<Partial<SelectUser>
     email: usersTable.email,
     phoneNumber: usersTable.phoneNumber,
     location: usersTable.location,
-    track: usersTable.trackId
+    trackId: usersTable.trackId
   }).from(usersTable).where(eq(usersTable.id, id)).leftJoin(trackTable, eq(usersTable.trackId, trackTable.id));
 
   return user;
@@ -94,7 +94,7 @@ export async function getAllCohort(): Promise<Partial<SelectCohort>[]>{
     id: cohortTable.id,
     title: cohortTable.title,
     startDate: cohortTable.startDate
-  }).from(cohortTable).orderBy(asc(usersTable.createdAt));
+  }).from(cohortTable).orderBy(asc(cohortTable.createdAt));
 
   return cohorts;
 }
@@ -114,7 +114,7 @@ export async function getAllEnrollment(){
     id: enrollmentTable.id,
     user: enrollmentTable.user,
     cohort: enrollmentTable.cohort
-  }).from(enrollmentTable).leftJoin(usersTable, eq(enrollmentTable.user, usersTable.id)).leftJoin(cohortTable, eq(enrollmentTable.cohort, cohortTable.id)).orderBy(asc(usersTable.createdAt));
+  }).from(enrollmentTable).leftJoin(usersTable, eq(enrollmentTable.user, usersTable.id)).leftJoin(cohortTable, eq(enrollmentTable.cohort, cohortTable.id)).orderBy(asc(cohortTable.createdAt));
 
   return enrollment;
 }
