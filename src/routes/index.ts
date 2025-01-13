@@ -10,10 +10,10 @@ import userRouter from "./user.router";
 const router = express.Router();
 
 router.use('/docs/', swaggerUI.serve, swaggerUI.setup(swaggerSpec, {
-  customCssUrl: '/public/css/swagger-ui.css',
+  customCssUrl: '/css/swagger-ui.css',
   customJs: [
-  '/public/js/swagger-ui-bundle.js',
-  '/public/js/swagger-ui-standalone-preset.js',
+  '/js/swagger-ui-bundle.js',
+  '/js/swagger-ui-standalone-preset.js',
   ],
 }));
 router.use('/auth/', authRouter);
