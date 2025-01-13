@@ -33,7 +33,6 @@ class UserController {
 
   async getAll(): Promise<Partial<SelectUser>[]>{
     const users = await getAllUser();
-    console.log(users);
 
     return users;
   }

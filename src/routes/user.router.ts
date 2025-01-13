@@ -25,21 +25,21 @@ const userController = new UserController();
  *          type: string
  *        trackId:
  *          type: integer
- *      UserReg:
- *        type: object
- *        properties:
- *          name:
- *            type: string
- *          email:
- *            type: string
- *          location:
- *            type: string
- *          phoneNumber:
- *            type: string
- *          trackId:
- *            type: integer
- *          cohort:
- *            type: integer
+ *    UserReg:
+ *      type: object
+ *      properties:
+ *        name:
+ *          type: string
+ *        email:
+ *          type: string
+ *        location:
+ *          type: string
+ *        phoneNumber:
+ *          type: string
+ *        trackId:
+ *          type: integer
+ *        cohort:
+ *          type: integer
  *  responses:
  *    UserResponses:
  *      type: object
@@ -135,8 +135,6 @@ userRouter.post('/', auth, async (req: Request, res: Response) => {
  *      description: This endpoint creates a new user and registers them for a cohort
  *      tags:
  *        - User APIs
- *      security:
- *        - bearerAuth: []
  *      requestBody:
  *        description: The new user details
  *        required: true
@@ -170,7 +168,7 @@ userRouter.post('/', auth, async (req: Request, res: Response) => {
  *              schema:
  *                $ref: "#/components/responses/ServerError"
  */
-userRouter.post('/register', auth, async (req: Request, res: Response) => {
+userRouter.post('/register', async (req: Request, res: Response) => {
   const data = req.body;
 
   try {

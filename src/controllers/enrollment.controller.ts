@@ -16,14 +16,13 @@ class EnrollmentController {
     return enrollment;
   }
 
-  async getAll(): Promise<Partial<SelectEnrollment>[]>{
+  async getAll(){
     const enrollments = await getAllEnrollment();
-    console.log(enrollments);
 
     return enrollments;
   }
 
-  async get(id: SelectEnrollment['id']): Promise<Partial<SelectEnrollment>[]>{
+  async get(id: SelectEnrollment['id']){
     const enrollment = await getEnrollment(id);
 
     return enrollment;

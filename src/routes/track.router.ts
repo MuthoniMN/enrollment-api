@@ -85,7 +85,7 @@ trackRouter.post('/', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 201,
-      message: "Successfully created the task!",
+      message: "Successfully created the track!",
       data: { track }
     }).status(201)
     return;
@@ -138,7 +138,7 @@ trackRouter.get('/', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 201,
-      message: "Successfully created the task!",
+      message: "Successfully retrieved the track!",
       data: { track }
     }).status(201)
     return;
@@ -197,7 +197,7 @@ trackRouter.get('/:id', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 201,
-      message: "Successfully created the task!",
+      message: "Successfully retrieved the track!",
       data: { track }
     }).status(201)
     return;
@@ -205,7 +205,7 @@ trackRouter.get('/:id', auth, async (req: Request, res: Response) => {
     if((e as Error).message === "Not found"){
       res.json({
         status: 404,
-        message: "Task was not found!",
+        message: "Track was not found!",
         data: {}
       }).status(404);
     }else{
@@ -237,8 +237,8 @@ trackRouter.get('/:id', auth, async (req: Request, res: Response) => {
 *         description: Track ID
 *     responses:
 *       200:
-*         summary: Successfully retrieved the track
-*         description: This endpoint returns the track
+*         summary: Successfully updated the track
+*         description: This endpoint returns the updated track
 *         content:
 *           application/json:
 *             schema:
@@ -267,7 +267,7 @@ trackRouter.put('/:id', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 201,
-      message: "Successfully created the task!",
+      message: "Successfully updated the track!",
       data: { track }
     }).status(201)
     return;
@@ -281,7 +281,7 @@ trackRouter.put('/:id', auth, async (req: Request, res: Response) => {
     }else if((e as Error).message === "Not found"){
       res.json({
         status: 404,
-        message: "Task was not found!",
+        message: "Track was not found!",
         data: {}
       }).status(404);
     }else {
@@ -341,7 +341,7 @@ trackRouter.delete('/:id', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 204,
-      message: "Successfully created the task!",
+      message: "Successfully deleted the track!",
       data: { track }
     }).status(204)
     return;
@@ -349,7 +349,7 @@ trackRouter.delete('/:id', auth, async (req: Request, res: Response) => {
     if((e as Error).message === "Not found"){
       res.json({
         status: 404,
-        message: "Task was not found!",
+        message: "Track was not found!",
         data: {}
       }).status(404);
     }else{

@@ -17,7 +17,7 @@ const cohortController = new CohortController();
  *      properties:
  *        title:
  *          type: string
- *        description:
+ *        startDate:
  *          type: string
  *  responses:
  *    CohortResponses:
@@ -79,17 +79,19 @@ const cohortController = new CohortController();
  */
 cohortRouter.post('/', auth, async (req: Request, res: Response) => {
   const data = req.body;
+  data['startDate'] = new Date(data['startDate']);
 
   try {
     const cohort = await cohortController.create(data);
 
     res.json({
       status: 201,
-      message: "Successfully created the task!",
+      message: "Successfully created the cohort!",
       data: { cohort }
     }).status(201)
     return;
   } catch (e) {
+    console.error(e);
     if((e as Error).message === "Invalid data"){
       res.json({
         status: 400,
@@ -138,7 +140,7 @@ cohortRouter.get('/', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 201,
-      message: "Successfully created the task!",
+      message: "Successfully retrieved the cohort!",
       data: { cohort }
     }).status(201)
     return;
@@ -197,7 +199,7 @@ cohortRouter.get('/:id', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 201,
-      message: "Successfully created the task!",
+      message: "Successfully retrieved the cohort!",
       data: { cohort }
     }).status(201)
     return;
@@ -205,7 +207,7 @@ cohortRouter.get('/:id', auth, async (req: Request, res: Response) => {
     if((e as Error).message === "Not found"){
       res.json({
         status: 404,
-        message: "Task was not found!",
+        message: "Cohort was not found!",
         data: {}
       }).status(404);
     }else{
@@ -237,8 +239,8 @@ cohortRouter.get('/:id', auth, async (req: Request, res: Response) => {
 *         description: Cohort ID
 *     responses:
 *       200:
-*         summary: Successfully retrieved the cohort
-*         description: This endpoint returns the cohort
+*         summary: Successfully updated the cohort
+*         description: This endpoint returns the updated cohort
 *         content:
 *           application/json:
 *             schema:
@@ -267,7 +269,7 @@ cohortRouter.put('/:id', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 201,
-      message: "Successfully created the task!",
+      message: "Successfully updated the cohort!",
       data: { cohort }
     }).status(201)
     return;
@@ -281,7 +283,7 @@ cohortRouter.put('/:id', auth, async (req: Request, res: Response) => {
     }else if((e as Error).message === "Not found"){
       res.json({
         status: 404,
-        message: "Task was not found!",
+        message: "Cohort was not found!",
         data: {}
       }).status(404);
     }else {
@@ -341,7 +343,7 @@ cohortRouter.delete('/:id', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 204,
-      message: "Successfully created the task!",
+      message: "Successfully deleted the cohort!",
       data: { cohort }
     }).status(204)
     return;
@@ -349,7 +351,7 @@ cohortRouter.delete('/:id', auth, async (req: Request, res: Response) => {
     if((e as Error).message === "Not found"){
       res.json({
         status: 404,
-        message: "Task was not found!",
+        message: "Cohort was not found!",
         data: {}
       }).status(404);
     }else{

@@ -25,7 +25,6 @@ export const auth = async(req: Request, res: Response, next: NextFunction) => {
     }
 
     const [head, token] = header.split(' ');
-    console.log(token)
 
     if(!token){
       res.json({

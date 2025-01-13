@@ -18,7 +18,6 @@ class CohortController {
 
   async getAll(): Promise<Partial<SelectCohort>[]>{
     const cohorts = await getAllCohort();
-    console.log(cohorts);
 
     return cohorts;
   }

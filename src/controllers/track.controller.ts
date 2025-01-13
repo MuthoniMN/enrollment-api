@@ -18,7 +18,6 @@ class TrackController {
 
   async getAll(): Promise<Partial<SelectTrack>[]>{
     const tracks = await getAllTrack();
-    console.log(tracks);
 
     return tracks;
   }

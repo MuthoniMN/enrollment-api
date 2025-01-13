@@ -9,7 +9,8 @@ import {
   usersTable,
   trackTable,
   cohortTable,
-  enrollmentTable
+  enrollmentTable,
+  SelectCohort
 } from "../schema";
 
 export async function createAdmin(data: InsertAdmin){
@@ -30,10 +31,15 @@ export async function createUser(data: InsertUser){
   return user;
 }
 
-export async function createUser(data: InsertUser){
+export async function createUserAndEnrollment(data: InsertUser, cohort: SelectCohort['id']){
   const user = await db.insert(usersTable).values(data).returning();
 
-  return user;
+  const enrollment = await db.insert(enrollmentTable).values({
+    cohort,
+    user: user[0].id
+  }).returning();
+
+  return { user, enrollment };
 }
 
 export async function createCohort(data: InsertCohort){

@@ -15,10 +15,10 @@ const enrollmentController = new EnrollmentController();
  *    Enrollment:
  *      type: object
  *      properties:
- *        title:
- *          type: string
- *        description:
- *          type: string
+ *        cohort:
+ *          type: integer
+ *        user:
+ *          type: integer
  *  responses:
  *    EnrollmentResponses:
  *      type: object
@@ -85,7 +85,7 @@ enrollmentRouter.post('/', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 201,
-      message: "Successfully created the task!",
+      message: "Successfully created the enrollment!",
       data: { enrollment }
     }).status(201)
     return;
@@ -138,7 +138,7 @@ enrollmentRouter.get('/', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 201,
-      message: "Successfully created the task!",
+      message: "Successfully retrieved the enrollment!",
       data: { enrollment }
     }).status(201)
     return;
@@ -197,7 +197,7 @@ enrollmentRouter.get('/:id', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 201,
-      message: "Successfully created the task!",
+      message: "Successfully retrieved the enrollment!",
       data: { enrollment }
     }).status(201)
     return;
@@ -205,7 +205,7 @@ enrollmentRouter.get('/:id', auth, async (req: Request, res: Response) => {
     if((e as Error).message === "Not found"){
       res.json({
         status: 404,
-        message: "Task was not found!",
+        message: "Enrollment was not found!",
         data: {}
       }).status(404);
     }else{
@@ -237,8 +237,8 @@ enrollmentRouter.get('/:id', auth, async (req: Request, res: Response) => {
 *         description: Enrollment ID
 *     responses:
 *       200:
-*         summary: Successfully retrieved the enrollment
-*         description: This endpoint returns the enrollment
+*         summary: Successfully updated the enrollment
+*         description: This endpoint returns the updated enrollment
 *         content:
 *           application/json:
 *             schema:
@@ -267,7 +267,7 @@ enrollmentRouter.put('/:id', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 201,
-      message: "Successfully created the task!",
+      message: "Successfully updated the enrollment!",
       data: { enrollment }
     }).status(201)
     return;
@@ -281,7 +281,7 @@ enrollmentRouter.put('/:id', auth, async (req: Request, res: Response) => {
     }else if((e as Error).message === "Not found"){
       res.json({
         status: 404,
-        message: "Task was not found!",
+        message: "Enrollment was not found!",
         data: {}
       }).status(404);
     }else {
@@ -341,7 +341,7 @@ enrollmentRouter.delete('/:id', auth, async (req: Request, res: Response) => {
 
     res.json({
       status: 204,
-      message: "Successfully created the task!",
+      message: "Successfully deleted the enrollment!",
       data: { enrollment }
     }).status(204)
     return;
@@ -349,7 +349,7 @@ enrollmentRouter.delete('/:id', auth, async (req: Request, res: Response) => {
     if((e as Error).message === "Not found"){
       res.json({
         status: 404,
-        message: "Task was not found!",
+        message: "Enrollment was not found!",
         data: {}
       }).status(404);
     }else{
