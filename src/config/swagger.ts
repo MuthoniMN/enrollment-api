@@ -36,7 +36,7 @@ const swaggerDefinition = {
 
 const options = {
   swaggerDefinition,
-  apis: ["./*.router.ts"],
+  apis: ["./src/routes/*.router.ts", "./dist/routes/*.router.ts"],
 }
 
 const swaggerSpec = swaggerJSDoc(options);
