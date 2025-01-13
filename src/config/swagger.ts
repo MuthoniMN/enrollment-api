@@ -12,6 +12,10 @@ const swaggerDefinition = {
       url: 'http://localhost:5000',
       description: 'Development server',
     },
+    {
+      url: 'https://enrollment-api-liart.vercel.app',
+      description: 'Production server',
+    },
   ],
   components: {
     securitySchemes: {
