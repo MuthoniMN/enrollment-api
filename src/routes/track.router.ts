@@ -132,7 +132,7 @@ trackRouter.post('/', auth, async (req: Request, res: Response) => {
 *             schema:
 *               $ref: "#/components/responses/ServerError"
 * */
-trackRouter.get('/', auth, async (req: Request, res: Response) => {
+trackRouter.get('/', async (req: Request, res: Response) => {
   try {
     const track = await trackController.getAll();
 

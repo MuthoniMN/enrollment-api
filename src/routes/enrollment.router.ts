@@ -268,7 +268,7 @@ enrollmentRouter.get('/:id', auth, async (req: Request, res: Response) => {
 *               $ref: "#/components/responses/ServerError"
 * */
 
-enrollmentRouter.put('/:id', auth, async (req: Request, res: Response) => {
+enrollmentRouter.put('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const data = req.body;
 

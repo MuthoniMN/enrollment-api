@@ -134,7 +134,7 @@ cohortRouter.post('/', auth, async (req: Request, res: Response) => {
 *             schema:
 *               $ref: "#/components/responses/ServerError"
 * */
-cohortRouter.get('/', auth, async (req: Request, res: Response) => {
+cohortRouter.get('/', async (req: Request, res: Response) => {
   try {
     const cohort = await cohortController.getAll();
 
