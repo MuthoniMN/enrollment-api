@@ -48,6 +48,7 @@ export const cohortTable = pgTable('cohorts', {
 export const enrollmentTable = pgTable('enrollments', {
   id: serial('id').primaryKey(),
   admitted: boolean('admitted'),
+  confirmed: boolean('confirmed'),
   deadline: timestamp('deadline'),
   user: integer('user').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
   cohort: integer('cohort').notNull().references(() => cohortTable.id, { onDelete: 'cascade' }),
