@@ -41,8 +41,11 @@ class UserController {
         track: details.user['track'] as string,
         reviewPeriod: "3 days"
       }
-
-      sendMail(mailOptions, emailData);
+      try {
+        sendMail(mailOptions, emailData);
+      }catch(e) {
+        console.error(e);
+      }
 
       return details;
     }

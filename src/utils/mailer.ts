@@ -1,5 +1,6 @@
 import transporter from "../config/nodemailer";
 import ejs from "ejs";
+import path from 'path';
 
 export interface MailOptions {
   from: string,
@@ -22,7 +23,7 @@ export interface EmailData {
 
 function sendEmail(mailOptions: MailOptions, emailData: EmailData){
   const { template, ...opts } = mailOptions;
-  ejs.renderFile(template, { ...emailData }, function(err, data){
+  ejs.renderFile(path.join(__dirname, template), { ...emailData }, function(err, data){
     if(err){
       console.error(err);
     }else {

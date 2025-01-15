@@ -181,6 +181,7 @@ userRouter.post('/register', async (req: Request, res: Response) => {
     }).status(201)
     return;
   } catch (e) {
+    console.error(e);
     if((e as Error).message === "Invalid data"){
       res.json({
         status: 400,
