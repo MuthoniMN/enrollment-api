@@ -12,6 +12,7 @@ import {
   cohortTable,
   enrollmentTable
 } from "../schema";
+import { getEnrollment } from "./select";
 
 export async function updateAdmin(id: SelectAdmin['id'], data: Partial<Omit<SelectAdmin, 'id'>>){
   await db.update(adminTable).set(data).where(eq(adminTable.id, id));
@@ -31,4 +32,8 @@ export async function updateCohort(id: SelectCohort['id'], data: Partial<Omit<Se
 
 export async function updateEnrollment(id: SelectEnrollment['id'], data: Partial<Omit<SelectEnrollment, 'id'>>){
   await db.update(enrollmentTable).set(data).where(eq(enrollmentTable.id, id));
+
+  const enrollment = await getEnrollment(id);
+
+  return enrollment;
 }

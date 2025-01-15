@@ -235,6 +235,16 @@ enrollmentRouter.get('/:id', auth, async (req: Request, res: Response) => {
 *           type: integer
 *         required: true
 *         description: Enrollment ID
+*     requestBody:
+*        description: The new enrollment details
+*        required: true
+*        content:
+*          application/json:
+*            schema:
+*              $ref: "#/components/schemas/Enrollment"
+*              example:
+*                title: Backend
+*                description: Back-end development using Node, Python, C#, Golang, .NET
 *     responses:
 *       200:
 *         summary: Successfully updated the enrollment
@@ -294,6 +304,145 @@ enrollmentRouter.put('/:id', auth, async (req: Request, res: Response) => {
   }
 
 })
+
+/**
+* @swagger
+* /api/v1/enrollments/admit/{id}:
+*   put:
+*     summary: Admit intern
+*     description: This endpoint accepts the intern into the bootcamp
+*     tags:
+*       - Enrollment APIs
+*     security:
+*       - bearerAuth: []
+*     parameters:
+*       - in: path 
+*         name: id
+*         schema:
+*           type: integer
+*         required: true
+*         description: Enrollment ID
+*     responses:
+*       200:
+*         summary: Successfully accepts an intern
+*         description: This endpoint accepts the intern's enrollment
+*         content:
+*           application/json:
+*             schema:
+*               $ref: "#/components/responses/EnrollmentResponses"
+*       404:
+*         summary: Not Found
+*         content:
+*           application/json:
+*             schema:
+*               $ref: "#/components/responses/ServerError"
+*       500:
+*         summary: Server Error 
+*         description: Internal server error 
+*         content:
+*           application/json:
+*             schema:
+*               $ref: "#/components/responses/ServerError"
+* */
+
+enrollmentRouter.put('/admit/:id', auth, async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const enrollment = await enrollmentController.admit(+id);
+
+    res.json({
+      status: 201,
+      message: "Successfully admitted to the cohort!",
+      data: { enrollment }
+    }).status(201)
+    return;
+  } catch (e) {
+    if((e as Error).message === "Not found"){
+      res.json({
+        status: 404,
+        message: "Enrollment was not found!",
+        data: {}
+      }).status(404);
+    }else {
+      res.json({
+        status: 500,
+        message: "Internal server error",
+        data: {}
+      }).status(500);
+    }
+  }
+});
+
+/**
+* @swagger
+* /api/v1/enrollments/reject/{id}:
+*   put:
+*     summary: Reject intern
+*     description: This endpoint rejects an intern application
+*     tags:
+*       - Enrollment APIs
+*     security:
+*       - bearerAuth: []
+*     parameters:
+*       - in: path 
+*         name: id
+*         schema:
+*           type: integer
+*         required: true
+*         description: Enrollment ID
+*     responses:
+*       200:
+*         summary: Successfully rejected the intern
+*         description: This endpoint rejects an intern's application
+*         content:
+*           application/json:
+*             schema:
+*               $ref: "#/components/responses/EnrollmentResponses"
+*       404:
+*         summary: Not Found
+*         content:
+*           application/json:
+*             schema:
+*               $ref: "#/components/responses/ServerError"
+*       500:
+*         summary: Server Error 
+*         description: Internal server error 
+*         content:
+*           application/json:
+*             schema:
+*               $ref: "#/components/responses/ServerError"
+* */
+
+enrollmentRouter.put('/reject/:id', auth, async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const enrollment = await enrollmentController.reject(+id);
+
+    res.json({
+      status: 201,
+      message: "Successfully rejected the intern!",
+      data: { enrollment }
+    }).status(201)
+    return;
+  } catch (e) {
+    if((e as Error).message === "Not found"){
+      res.json({
+        status: 404,
+        message: "Enrollment was not found!",
+        data: {}
+      }).status(404);
+    }else {
+      res.json({
+        status: 500,
+        message: "Internal server error",
+        data: {}
+      }).status(500);
+    }
+  }
+})
+
 
 /**
 * @swagger

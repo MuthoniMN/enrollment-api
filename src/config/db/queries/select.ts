@@ -117,7 +117,9 @@ export async function getAllEnrollment(){
     userTrack: trackTable.title,
     cohortTitle: cohortTable.title,
     cohortStartDate: cohortTable.startDate,
-  }).from(enrollmentTable).leftJoin(usersTable, eq(enrollmentTable.user, usersTable.id)).leftJoin(trackTable, eq(usersTable.trackId, trackTable.id)).leftJoin(cohortTable, eq(enrollmentTable.cohort, cohortTable.id)).orderBy(asc(cohortTable.createdAt));
+    orientationDate: cohortTable.orientationDate,
+    duration: cohortTable.duration,
+    deadline: enrollmentTable.deadline  }).from(enrollmentTable).leftJoin(usersTable, eq(enrollmentTable.user, usersTable.id)).leftJoin(trackTable, eq(usersTable.trackId, trackTable.id)).leftJoin(cohortTable, eq(enrollmentTable.cohort, cohortTable.id)).orderBy(asc(cohortTable.createdAt));
 
   return enrollment;
 }
@@ -130,8 +132,11 @@ export async function getEnrollment(id: SelectEnrollment['id']){
     userTrack: trackTable.title,
     cohortTitle: cohortTable.title,
     cohortStartDate: cohortTable.startDate,
+    orientationDate: cohortTable.orientationDate,
+    duration: cohortTable.duration,
+    deadline: enrollmentTable.deadline
   }).from(enrollmentTable).where(eq(enrollmentTable.id, id)).leftJoin(usersTable, eq(enrollmentTable.user, usersTable.id)).leftJoin(trackTable, eq(usersTable.trackId, trackTable.id)).leftJoin(cohortTable, eq(enrollmentTable.cohort, cohortTable.id));
 
-  return enrollment;
+  return enrollment[0];
 }
 

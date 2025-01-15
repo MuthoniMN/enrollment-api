@@ -1,4 +1,4 @@
-import { integer, pgTable, serial, text, timestamp, unique } from 'drizzle-orm/pg-core';
+import { integer, pgTable, serial, text, timestamp, unique, boolean } from 'drizzle-orm/pg-core';
 
 export const adminTable = pgTable('admins', {
   id: serial('id').primaryKey(),
@@ -37,6 +37,8 @@ export const cohortTable = pgTable('cohorts', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
   startDate: timestamp('startDate').notNull(),
+  orientationDate: timestamp('orientationDate'),
+  duration: text('duration'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at')
     .notNull()
@@ -45,6 +47,8 @@ export const cohortTable = pgTable('cohorts', {
 
 export const enrollmentTable = pgTable('enrollments', {
   id: serial('id').primaryKey(),
+  admitted: boolean('admitted'),
+  deadline: timestamp('deadline'),
   user: integer('user').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
   cohort: integer('cohort').notNull().references(() => cohortTable.id, { onDelete: 'cascade' }),
   createdAt: timestamp('created_at').notNull().defaultNow(),

@@ -10,8 +10,10 @@ import {
   trackTable,
   cohortTable,
   enrollmentTable,
-  SelectCohort
+  SelectCohort,
+  SelectUser
 } from "../schema";
+import { eq } from 'drizzle-orm';
 
 export async function createAdmin(data: InsertAdmin){
   const admin = await db.insert(adminTable).values(data).returning();
@@ -34,12 +36,20 @@ export async function createUser(data: InsertUser){
 export async function createUserAndEnrollment(data: InsertUser, cohort: SelectCohort['id']){
   const user = await db.insert(usersTable).values(data).returning();
 
-  const enrollment = await db.insert(enrollmentTable).values({
-    cohort,
-    user: user[0].id
-  }).returning();
+  if(user){
+    const userData = await db.select({
+      name: usersTable.name,
+      email: usersTable.email,
+      track: trackTable.title
+    }).from(usersTable).where(eq(usersTable.id, (user[0] as SelectUser)['id'])).leftJoin(trackTable, eq(usersTable.trackId, trackTable.id));
 
-  return { user, enrollment };
+    const enrollment = await db.insert(enrollmentTable).values({
+      cohort,
+      user: user[0].id
+    }).returning();
+
+    return { user: userData[0], enrollment };
+  }
 }
 
 export async function createCohort(data: InsertCohort){

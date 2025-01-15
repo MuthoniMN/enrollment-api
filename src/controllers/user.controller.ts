@@ -3,6 +3,7 @@ import { createUser, createUserAndEnrollment } from "../config/db/queries/insert
 import { getAllUser, getUser } from "../config/db/queries/select";
 import { updateUser } from "../config/db/queries/update";
 import { deleteUser } from "../config/db/queries/delete";
+import sendMail, { MailOptions, EmailData } from "../utils/mailer";
 
 export interface RegisterUser extends InsertUser {
   cohort: SelectCohort['id']
@@ -27,6 +28,10 @@ class UserController {
     const { cohort, ...userData  } = data;
     
     const details = await createUserAndEnrollment(userData, cohort);
+
+    const mailOptions = {
+      
+    }
 
     return details;
   }
