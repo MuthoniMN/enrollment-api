@@ -3,7 +3,7 @@ import { createUser, createUserAndEnrollment } from "../config/db/queries/insert
 import { getAllUser, getUser } from "../config/db/queries/select";
 import { updateUser } from "../config/db/queries/update";
 import { deleteUser } from "../config/db/queries/delete";
-import sendMail, { MailOptions, EmailData } from "../utils/mailer";
+import sendMail from "../utils/mailer";
 
 export interface RegisterUser extends InsertUser {
   cohort: SelectCohort['id']
@@ -28,12 +28,24 @@ class UserController {
     const { cohort, ...userData  } = data;
     
     const details = await createUserAndEnrollment(userData, cohort);
+    if(details){
+      const mailOptions = {
+        from: process.env.MAIL_USER as string,
+        to: userData['email'],
+        subject: "Rhedge Studios Intern Bootcamp Registration Confirmation",
+        template: "../templates/confirmation.ejs"
+      }
 
-    const mailOptions = {
-      
+      const emailData = {
+        applicantName: details.user['name'] as string,
+        track: details.user['track'] as string,
+        reviewPeriod: "3 days"
+      }
+
+      sendMail(mailOptions, emailData);
+
+      return details;
     }
-
-    return details;
   }
 
   async getAll(): Promise<Partial<SelectUser>[]>{
